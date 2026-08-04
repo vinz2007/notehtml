@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sổ Tay AI — Ghi chú &amp; Chi tiêu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">✎</span>
+      <div>
+        <h1>Sổ Tay AI</h1>
+        <p>Ghi chú &amp; chi tiêu, tự đọc hiểu</p>
+      </div>
+    </div>
+
+    <nav class="tabs" id="tabs">
+      <button class="tab-btn active" data-tab="notes">
+        <span class="tab-num">01</span> Ghi chú
+      </button>
+      <button class="tab-btn" data-tab="expenses">
+        <span class="tab-num">02</span> Sổ chi tiêu
+      </button>
+      <button class="tab-btn" data-tab="overview">
+        <span class="tab-num">03</span> Tổng quan
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="status-dot" id="apiStatusDot"></div>
+      <span id="apiStatusText">Đang kiểm tra kết nối AI…</span>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <!-- TAB: GHI CHÚ -->
+    <section class="panel active" id="panel-notes">
+      <div class="composer">
+        <label for="noteInput">Viết điều bạn muốn nhớ</label>
+        <textarea id="noteInput" rows="4" placeholder="Ví dụ: Chiều nay uống trà sữa với Thu hết 45k, nhớ hỏi cô về đề tài luận văn tuần sau…"></textarea>
+        <div class="composer-actions">
+          <span class="hint">AI sẽ tự tóm ý chính &amp; phát hiện khoản chi tiêu nếu có</span>
+          <button id="submitNote" class="btn-primary">
+            <span class="btn-label">Ghi &amp; phân tích</span>
+            <span class="btn-spinner" hidden></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="notes-list" id="notesList">
+        <div class="empty-state">
+          <p>Chưa có ghi chú nào.</p>
+          <p class="empty-sub">Trang giấy đầu tiên đang chờ bạn.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: CHI TIÊU -->
+    <section class="panel" id="panel-expenses">
+      <div class="ledger-head">
+        <div class="ledger-stat">
+          <span class="ledger-label">Đã chi</span>
+          <span class="ledger-value chi" id="statChi">0 ₫</span>
+        </div>
+        <div class="ledger-stat">
+          <span class="ledger-label">Đã thu</span>
+          <span class="ledger-value thu" id="statThu">0 ₫</span>
+        </div>
+        <div class="ledger-stat">
+          <span class="ledger-label">Số dư</span>
+          <span class="ledger-value balance" id="statBalance">0 ₫</span>
+        </div>
+      </div>
+
+      <form class="manual-expense" id="manualExpenseForm">
+        <input type="text" id="expDescription" placeholder="Mô tả khoản thu/chi" required />
+        <input type="number" id="expAmount" placeholder="Số tiền" min="0" required />
+        <select id="expCategory">
+          <option>Ăn uống</option>
+          <option>Di chuyển</option>
+          <option>Mua sắm</option>
+          <option>Hoá đơn</option>
+          <option>Giải trí</option>
+          <option>Học tập</option>
+          <option>Sức khoẻ</option>
+          <option>Khác</option>
+        </select>
+        <select id="expType">
+          <option value="chi">Chi</option>
+          <option value="thu">Thu</option>
+        </select>
+        <button type="submit" class="btn-secondary">Thêm</button>
+      </form>
+
+      <div class="receipt-list" id="expensesList">
+        <div class="empty-state">
+          <p>Sổ chi tiêu còn trống.</p>
+          <p class="empty-sub">Ghi chú có nhắc đến tiền sẽ tự xuất hiện ở đây.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: TỔNG QUAN -->
+    <section class="panel" id="panel-overview">
+      <h2 class="overview-title">Chi tiêu theo danh mục</h2>
+      <div class="category-bars" id="categoryBars"></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
